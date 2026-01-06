@@ -1,6 +1,6 @@
 # 🕯️ Biso's Chamber 🕯️
 
-![Biso's Chamber Hero](./bisos_chamber_hero_readme_1767722927589.png)
+![Biso's Chamber Hero](image.png)
 
 > *"Step into the sanctuary where technology meets serenity. A place where digital souls whisper in the glow of amber light."*
 
