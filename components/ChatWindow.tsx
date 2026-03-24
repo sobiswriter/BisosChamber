@@ -3,6 +3,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Persona, Message, Attachment, UserProfile } from '../types';
 import { Send, Sparkles, Info, Trash2, Clock, PlusCircle, Paperclip, X, Download, FileUp, FileAudio, FileVideo, Zap, Theater, ImageIcon, Link as LinkIcon, Ghost } from 'lucide-react';
 import TypingText from './TypingText';
+import MarkdownRenderer from './MarkdownRenderer';
 
 interface ChatWindowProps {
   persona: Persona;
@@ -302,8 +303,10 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
                   {msg.attachment && renderAttachment(msg.attachment)}
                   {isAnimating ? (
                     <TypingText text={msg.text} onComplete={() => setLastAnimatedId(null)} />
-                  ) : (
+                  ) : isUser ? (
                     msg.text
+                  ) : (
+                    <MarkdownRenderer content={msg.text} />
                   )}
                 </div>
               </div>
