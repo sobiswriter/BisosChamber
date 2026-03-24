@@ -78,6 +78,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ settings, onClose, onSave
             <div className="space-y-3">
               {[
                 { id: 'gemini-3-flash-preview', label: 'Gemini 3 Flash', desc: 'Fastest, smartest, most capable for complex reasoning.' },
+                { id: 'gemini-3.1-flash-lite-preview', label: 'Gemini 3.1 Flash-Lite', desc: 'Newer lightweight preview model, efficient for everyday tasks.' },
                 { id: 'gemini-2.5-flash', label: 'Gemini 2.5 Flash', desc: 'Balanced performance for cozy interactions.' },
                 { id: 'gemini-2.5-flash-lite', label: 'Gemini 2.5 Flash-Lite', desc: 'Lightweight and efficient for simpler tasks.' }
               ].map((model) => (
