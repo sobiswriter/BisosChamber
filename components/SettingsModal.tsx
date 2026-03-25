@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { AppSettings } from '../types';
-import { X, Settings, Cpu, Keyboard, Trash2, Download, Info } from 'lucide-react';
+import { X, Settings, Cpu, Keyboard, Trash2, Download, Info, Clock } from 'lucide-react';
 
 interface SettingsModalProps {
   settings: AppSettings;
@@ -13,9 +13,10 @@ interface SettingsModalProps {
 const SettingsModal: React.FC<SettingsModalProps> = ({ settings, onClose, onSave, onResetData }) => {
   const [localModel, setLocalModel] = React.useState(settings.model);
   const [localApiKey, setLocalApiKey] = React.useState(settings.apiKey || '');
+  const [localShowDateTime, setLocalShowDateTime] = React.useState(settings.showDateTimeContext ?? false);
 
   const handleSave = () => {
-    onSave({ ...settings, model: localModel, apiKey: localApiKey });
+    onSave({ ...settings, model: localModel, apiKey: localApiKey, showDateTimeContext: localShowDateTime });
     onClose();
   };
 
@@ -97,6 +98,27 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ settings, onClose, onSave
                   <p className="text-xs text-stone-500 dark:text-stone-400">{model.desc}</p>
                 </button>
               ))}
+            </div>
+          </section>
+
+          {/* Chat Context */}
+          <section className="space-y-4">
+            <div className="flex items-center gap-2 mb-2">
+              <Clock size={18} className="text-amber-500" />
+              <h3 className="font-black text-xs uppercase tracking-[0.2em] text-stone-400">Chat Context</h3>
+            </div>
+            <div className="flex items-center justify-between p-4 rounded-2xl bg-stone-50 dark:bg-stone-800/40 border-2 border-stone-100 dark:border-stone-800">
+              <div>
+                <p className="font-bold text-stone-800 dark:text-stone-200 text-sm">Include Date & Time</p>
+                <p className="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Share the current date and time with the AI so it can be aware of when you're chatting.</p>
+              </div>
+              <button
+                onClick={() => setLocalShowDateTime(v => !v)}
+                aria-pressed={localShowDateTime}
+                className={`relative ml-4 flex-shrink-0 w-12 h-6 rounded-full transition-colors duration-200 focus:outline-none ${localShowDateTime ? 'bg-amber-500' : 'bg-stone-300 dark:bg-stone-600'}`}
+              >
+                <span className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform duration-200 ${localShowDateTime ? 'translate-x-6' : 'translate-x-0'}`} />
+              </button>
             </div>
           </section>
 

@@ -8,6 +8,11 @@ export class GeminiService {
     return new GoogleGenAI({ apiKey });
   }
 
+  private getDateTimeContext(settings: AppSettings): string {
+    if (!settings.showDateTimeContext) return '';
+    return `\n\nCURRENT DATE & TIME: ${new Date().toLocaleString(undefined, { dateStyle: 'full', timeStyle: 'short' })}`;
+  }
+
   async getChatResponse(
     persona: Persona,
     userProfile: UserProfile,
@@ -53,6 +58,7 @@ export class GeminiService {
     const userContext = userProfile.isAnonymous
       ? `YOU ARE TALKING TO: A mysterious stranger (Anonymous).`
       : `YOU ARE TALKING TO: ${userProfile.name}. Description: ${userProfile.personality}. Bio: ${userProfile.bio}`;
+    const dateTimeContext = this.getDateTimeContext(settings);
 
     const systemInstruction = `
       Role: You are ${persona.name}, the ${persona.role}.
@@ -60,7 +66,7 @@ export class GeminiService {
       Backstory: ${persona.bio}
       Interests: ${persona.interests.join(', ')}
       Speaking Style: ${persona.speakingStyle}.${memoriesSection}
-      ${userContext}
+      ${userContext}${dateTimeContext}
 
       DIALOGUE RULES:
       1. Stay strictly in character as ${persona.name}. Never admit you are an AI.
@@ -106,11 +112,12 @@ export class GeminiService {
     }).join('\n');
 
     const castList = allCastConfigs.map(c => `- ${c.name} (Base Archetype: ${c.role} | Scene Specific Role: ${c.sceneRole || 'Same as archetype'})`).join('\n');
+    const dateTimeContext = this.getDateTimeContext(settings);
 
     const systemInstruction = `
       You are writing a lines for ${speakingPersona.name} in a collective story simulation.
       
-      CURRENT SCENE: ${currentScene}
+      CURRENT SCENE: ${currentScene}${dateTimeContext}
       
       YOUR CHARACTER (${speakingPersona.name}):
       Base Personality: ${speakingPersona.personality}
