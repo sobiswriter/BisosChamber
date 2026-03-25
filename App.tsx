@@ -24,7 +24,8 @@ const DEFAULT_USER: UserProfile = {
 };
 
 const DEFAULT_SETTINGS: AppSettings = {
-  model: 'gemini-3-flash-preview'
+  model: 'gemini-3-flash-preview',
+  showDateTimeContext: false
 };
 
 const App: React.FC = () => {
